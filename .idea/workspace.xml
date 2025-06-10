@@ -133,13 +133,13 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.AArch64TargetParserTableGen" />
-      <item itemvalue="CMake Application.ARMTargetParserTableGen" />
-      <item itemvalue="CMake Application.RISCVTargetParserTableGen" />
       <item itemvalue="CMake Application.ac" />
+      <item itemvalue="CMake Application.AArch64TargetParserTableGen" />
       <item itemvalue="CMake Application.acc_gen" />
+      <item itemvalue="CMake Application.ARMTargetParserTableGen" />
       <item itemvalue="CMake Application.intrinsics_gen" />
       <item itemvalue="CMake Application.omp_gen" />
+      <item itemvalue="CMake Application.RISCVTargetParserTableGen" />
       <item itemvalue="CMake Application.vt_gen" />
     </list>
   </component>
