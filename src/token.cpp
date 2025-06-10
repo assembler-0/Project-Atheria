@@ -11,6 +11,14 @@ std::string tokenTypeToString(TokenType type) {
         case TokenType::IDENTIFIER:     return "IDENTIFIER";
         case TokenType::STRING_LITERAL: return "STRING_LITERAL";
         case TokenType::END_OF_FILE:    return "END_OF_FILE";
+        case TokenType::PLUS:    return "PLUS";
+        case TokenType::MINUS:    return "MINUS";
+        case TokenType::STAR:    return "STAR";
+        case TokenType::SLASH:    return "SLASH";
+        case TokenType::EQUAL:    return "EQUAL";
+        case TokenType::NUMBER_LITERAL:    return "NUMBER_LITERAL";
+        case TokenType::RETURN:    return "RETURN";
+        case TokenType::COMMA:    return "COMMA";
         default:                        return "UNKNOWN";
     }
 }

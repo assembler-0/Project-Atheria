@@ -1,14 +1,14 @@
 #include "lexer.hpp"
-#include <cctype> // for isalpha, isalnum
+#include <cctype> // for isalpha, isalnum, isdigit
 
 Lexer::Lexer(const std::string& source) : m_source(source) {}
 
-// A very important note on your "Rust-like types" comment:
-// The lexer's job is to identify `int32_t` as an IDENTIFIER. That's it.
-// It is the *parser's* job later on to understand that this particular
-// identifier is being used as a type annotation. This design is flexible
-// and correct! It means if you later want `i32` or `MyCoolType`, the
-// lexer doesn't need to change at all.
+// Helper function to check for keywords
+static TokenType checkKeyword(const std::string& text) {
+    if (text == "return") return TokenType::RETURN;
+    // You'll add more keywords like 'if', 'else', 'let', 'int32_t' here later
+    return TokenType::IDENTIFIER;
+}
 
 Token Lexer::getNextToken() {
     skipWhitespace();
@@ -19,14 +19,17 @@ Token Lexer::getNextToken() {
 
     char c = advance();
 
-    // Handle identifiers and keywords
+    // Handle multi-character tokens first
     if (isalpha(c) || c == '_') {
-        // We've backtracked one character because advance() consumed it.
-        m_current_pos--; 
+        m_current_pos--; // Backtrack to include the first character
         return makeIdentifier();
     }
 
-    // Handle string literals
+    if (isdigit(c)) {
+        m_current_pos--; // Backtrack to include the first character
+        return makeNumber();
+    }
+
     if (c == '"') {
         return makeString();
     }
@@ -38,6 +41,12 @@ Token Lexer::getNextToken() {
         case '{': return {TokenType::LEFT_BRACE, "{"};
         case '}': return {TokenType::RIGHT_BRACE, "}"};
         case ';': return {TokenType::SEMICOLON, ";"};
+        case '+': return {TokenType::PLUS, "+"};
+        case '-': return {TokenType::MINUS, "-"};
+        case '*': return {TokenType::STAR, "*"};
+        case '/': return {TokenType::SLASH, "/"};
+        case '=': return {TokenType::EQUAL, "="};
+        case ',': return {TokenType::COMMA, ","};
     }
 
     return {TokenType::UNKNOWN, std::string(1, c)};
@@ -81,7 +90,8 @@ Token Lexer::makeIdentifier() {
         advance();
     }
     std::string text = m_source.substr(start, m_current_pos - start);
-    return {TokenType::IDENTIFIER, text};
+    TokenType type = checkKeyword(text);
+    return {type, text};
 }
 
 Token Lexer::makeString() {
@@ -89,17 +99,21 @@ Token Lexer::makeString() {
     while (peek() != '"' && !isAtEnd()) {
         advance();
     }
-    
-    // We don't handle unterminated strings for now, but in a real
-    // compiler, you would want to report an error here.
+
     if (isAtEnd()) {
         return {TokenType::UNKNOWN, "Unterminated string."};
     }
 
-    // Consume the closing quote.
-    advance();
-
-    // The value of the string is the part *inside* the quotes.
+    advance(); // Consume the closing quote.
     std::string value = m_source.substr(start, m_current_pos - start - 1);
     return {TokenType::STRING_LITERAL, value};
+}
+
+Token Lexer::makeNumber() {
+    size_t start = m_current_pos;
+    while (isdigit(peek())) {
+        advance();
+    }
+    std::string value = m_source.substr(start, m_current_pos - start);
+    return {TokenType::NUMBER_LITERAL, value};
 }

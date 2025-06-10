@@ -1,3 +1,4 @@
 int32_t main() {
     print("Hello world");
+    return 5 * (2 + 10)
 }

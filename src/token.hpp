@@ -9,15 +9,24 @@ enum class TokenType {
     LEFT_PAREN, RIGHT_PAREN,
     LEFT_BRACE, RIGHT_BRACE,
     SEMICOLON,
+    PLUS,       // +
+    MINUS,      // -
+    STAR,       // *
+    SLASH,      // /
+    EQUAL,      // =
+    COMMA,      // ,
 
     // Literals
     IDENTIFIER,
     STRING_LITERAL,
-    // We'll add NUMBER_LITERAL later
+    NUMBER_LITERAL, // e.g., 123
+
+    // Keywords
+    RETURN,     // The 'return' keyword
 
     // Special
     END_OF_FILE,
-    UNKNOWN // For errors
+    UNKNOWN
 };
 
 // A simple helper function to convert a TokenType to a string for printing.

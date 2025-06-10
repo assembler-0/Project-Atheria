@@ -19,7 +19,8 @@ private:
     bool isAtEnd(); // Check if we've consumed all characters
     void skipWhitespace(); // Skips spaces, tabs, newlines
 
-    // Token-specific helpers
+    // Token-specific helpers]
+    Token makeNumber();
     Token makeIdentifier();
     Token makeString();
 };

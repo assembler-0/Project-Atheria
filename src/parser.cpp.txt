@@ -1,0 +1,137 @@
+#include "parser.hpp"
+#include <stdexcept> // For std::runtime_error
+#include <iostream>
+
+Parser::Parser(const std::vector<Token>& tokens) : m_tokens(tokens) {}
+
+// The main parsing function
+std::unique_ptr<ProgramNode> Parser::parse() {
+    auto program = std::make_unique<ProgramNode>();
+    while (!isAtEnd()) {
+        program->functions.push_back(parseFunctionDefinition());
+    }
+    return program;
+}
+
+// --- Grammar Rule Parsers ---
+
+// functionDefinition -> type identifier "(" ")" "{" statement* "}"
+std::unique_ptr<FunctionDefinitionNode> Parser::parseFunctionDefinition() {
+    auto funcDef = std::make_unique<FunctionDefinitionNode>();
+    funcDef->returnType = consume(TokenType::IDENTIFIER, "Expect return type.");
+    funcDef->functionName = consume(TokenType::IDENTIFIER, "Expect function name.");
+    consume(TokenType::LEFT_PAREN, "Expect '(' after function name.");
+    consume(TokenType::RIGHT_PAREN, "Expect ')' after parameters.");
+    consume(TokenType::LEFT_BRACE, "Expect '{' before function body.");
+
+    while (!check(TokenType::RIGHT_BRACE) && !isAtEnd()) {
+        funcDef->body.push_back(parseStatement());
+    }
+
+    consume(TokenType::RIGHT_BRACE, "Expect '}' after function body.");
+    return funcDef;
+}
+
+// statement -> functionCallStatement
+std::unique_ptr<StatementNode> Parser::parseStatement() {
+    // For now, the only statement we support is a function call
+    return parseFunctionCallStatement();
+}
+
+// functionCallStatement -> identifier "(" expression? ")" ";"
+std::unique_ptr<FunctionCallStatementNode> Parser::parseFunctionCallStatement() {
+    auto funcCall = std::make_unique<FunctionCallStatementNode>();
+    funcCall->functionName = consume(TokenType::IDENTIFIER, "Expect function name for call.");
+    consume(TokenType::LEFT_PAREN, "Expect '(' after function name.");
+
+    // Parse arguments if they exist
+    if (!check(TokenType::RIGHT_PAREN)) {
+        do {
+            funcCall->arguments.push_back(parseExpression());
+        } while (false); // No commas for now, just one argument
+    }
+
+    consume(TokenType::RIGHT_PAREN, "Expect ')' after arguments.");
+    consume(TokenType::SEMICOLON, "Expect ';' after statement.");
+    return funcCall;
+}
+
+// expression -> STRING_LITERAL
+std::unique_ptr<ExpressionNode> Parser::parseExpression() {
+    if (check(TokenType::STRING_LITERAL)) {
+        auto strLiteral = std::make_unique<StringLiteralNode>();
+        strLiteral->value = advance();
+        return strLiteral;
+    }
+    throw std::runtime_error("Parse error: Expected an expression.");
+    if (check(TokenType::NUMBER_LITERAL)){
+        auto left = parseTerm(); // Parse the left-hand side
+
+        while (check(TokenType::PLUS) || check(TokenType::MINUS)) {
+            Token op = advance();
+            auto right = parseTerm();
+            auto new_left = std::make_unique<BinaryOpNode>();
+            new_left->left = std::move(left);
+            new_left->op = op;
+            new_left->right = std::move(right);
+            left = std::move(new_left);
+        }
+        return left;
+    }
+}
+
+
+// term -> primary ( (STAR | SLASH) primary )*
+std::unique_ptr<ExpressionNode> Parser::parseTerm() {
+    auto left = parsePrimary();
+
+    while (check(TokenType::STAR) || check(TokenType::SLASH)) {
+        Token op = advance();
+        auto right = parsePrimary();
+        auto new_left = std::make_unique<BinaryOpNode>();
+        new_left->left = std::move(left);
+        new_left->op = op;
+        new_left->right = std::move(right);
+        left = std::move(new_left);
+    }
+    return left;
+}
+
+// primary -> NUMBER_LITERAL | IDENTIFIER | "(" expression ")"
+std::unique_ptr<ExpressionNode> Parser::parsePrimary() {
+    if (check(TokenType::NUMBER_LITERAL)) {
+        auto numNode = std::make_unique<NumberLiteralNode>();
+        numNode->value = advance();
+        return numNode;
+    }
+    if (check(TokenType::IDENTIFIER)) {
+        auto varNode = std::make_unique<VariableNode>();
+        varNode->name = advance();
+        return varNode;
+    }
+    if (check(TokenType::LEFT_PAREN)) {
+        advance(); // consume '('
+        auto expr = parseExpression();
+        consume(TokenType::RIGHT_PAREN, "Expect ')' after expression.");
+        return expr;
+    }
+    std::cerr << "Parse Error: Expected an expression." << std::endl;
+    return nullptr;
+}
+
+// --- Helper Methods ---
+
+Token Parser::peek() { return m_tokens[m_current]; }
+Token Parser::previous() { return m_tokens[m_current - 1]; }
+bool Parser::isAtEnd() { return peek().type == TokenType::END_OF_FILE; }
+bool Parser::check(TokenType type) { return peek().type == type; }
+
+Token Parser::advance() {
+    if (!isAtEnd()) m_current++;
+    return previous();
+}
+
+Token Parser::consume(TokenType type, const std::string& message) {
+    if (check(type)) return advance();
+    throw std::runtime_error("Parse error: " + message);
+}

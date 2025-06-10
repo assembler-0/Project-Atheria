@@ -6,7 +6,7 @@
 #include <vector>
 #include "token.hpp" // We need the Token struct
 
-struct ReturnStatementNode;1
+// Forward-declare all our node types so they can know about each other
 struct ProgramNode;
 struct FunctionDefinitionNode;
 struct StatementNode;
@@ -30,8 +30,7 @@ struct AstVisitor {
     virtual void visit(NumberLiteralNode* node) = 0;
     virtual void visit(BinaryOpNode* node) = 0;
     virtual void visit(VariableNode* node) = 0;
-    virtual void visit(ReturnStatementNode* node) = 0;
-
+    virtual void visit(ParameterNode* node) = 0;
 };
 
 
@@ -72,17 +71,6 @@ struct FunctionDefinitionNode : public AstNode {
     void accept(AstVisitor& visitor) override { visitor.visit(this); }
 };
 
-struct ParameterNode : public AstNode {
-    Token type;
-    Token name;
-    // This is no longer an override, but it's cleaner to remove it.
-    // void accept(AstVisitor& visitor) override { visitor.visit(this); } // <-- DELETE THIS LINE
-    // Let's make it an error to call accept on it.
-    void accept(AstVisitor& visitor) override {
-        // This should never be called. Parameters are handled directly by FunctionDefinitionNode's visitor.
-        (void)visitor; // a way to tell the compiler we are intentionally not using a parameter
-    }
-};
 // The root of our entire tree
 struct ProgramNode : public AstNode {
     std::vector<std::unique_ptr<FunctionDefinitionNode>> functions;
@@ -105,10 +93,5 @@ struct BinaryOpNode : public ExpressionNode {
     std::unique_ptr<ExpressionNode> left;
     Token op; // The operator token (+, -, *, /)
     std::unique_ptr<ExpressionNode> right;
-    void accept(AstVisitor& visitor) override { visitor.visit(this); }
-};
-
-struct ReturnStatementNode : public StatementNode {
-    std::unique_ptr<ExpressionNode> expression;
     void accept(AstVisitor& visitor) override { visitor.visit(this); }
 };
