@@ -1,4 +1,7 @@
-int32_t main() {
-    print("Hello world");
-    return 5 * (2 + 10)
+int32_t add(int32_t a, int32_t b) {
+    return a * b;
+}
+int32_t main(){
+    print("Atheria");
+    return 0;
 }

@@ -3,8 +3,6 @@
 
 Parser::Parser(const std::vector<Token>& tokens) : m_tokens(tokens) {}
 
-
-
 std::unique_ptr<ProgramNode> Parser::parse() {
     auto program = std::make_unique<ProgramNode>();
     while (!isAtEnd()) {
@@ -54,8 +52,36 @@ std::unique_ptr<ParameterNode> Parser::parseParameter() {
 }
 
 std::unique_ptr<StatementNode> Parser::parseStatement() {
+    if (check(TokenType::RETURN)) {
+        return parseReturnStatement();
+    }
+    // You can add more later, e.g., if (check(TokenType::LET)) { return parseLetStatement(); }
 
+    // Default to a function call if it's an identifier followed by a parenthesis
+    // This part is a little tricky, but let's assume for now the only other
+    // statement is a function call. A more robust parser would check this better.
     return parseFunctionCallStatement();
+}
+
+// Add this new function to parser.cpp
+std::unique_ptr<StatementNode> Parser::parseReturnStatement() {
+    // 1. Consume the 'return' keyword
+    if (!consume(TokenType::RETURN, "Expect 'return' keyword.")) return nullptr;
+
+    // 2. Create the AST node
+    auto returnNode = std::make_unique<ReturnStatementNode>();
+
+    // 3. Parse the expression that comes after 'return'
+    returnNode->returnValue = parseExpression();
+    if (!returnNode->returnValue) {
+        // Error already printed by parseExpression
+        return nullptr;
+    }
+
+    // 4. Consume the trailing semicolon
+    if (!consume(TokenType::SEMICOLON, "Expect ';' after return value.")) return nullptr;
+
+    return returnNode;
 }
 
 std::unique_ptr<FunctionCallStatementNode> Parser::parseFunctionCallStatement() {

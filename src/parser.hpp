@@ -24,6 +24,7 @@ private:
     // Parsing methods
     std::unique_ptr<FunctionDefinitionNode> parseFunctionDefinition();
     std::unique_ptr<StatementNode> parseStatement();
+    std::unique_ptr<StatementNode> parseReturnStatement();
     std::unique_ptr<FunctionCallStatementNode> parseFunctionCallStatement();
 
     // --- Expression Parsing Hierarchy ---

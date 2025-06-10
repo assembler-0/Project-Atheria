@@ -173,7 +173,7 @@ void CodeGen::visit(FunctionCallStatementNode* node) {
         // Look up the C 'printf' function, or declare it if it doesn't exist
         llvm::Function* printf_func = m_module->getFunction("printf");
         if (!printf_func) {
-            llvm::IntegerType* printf_arg_type = m_builder->getIntPtrTy();
+            llvm::PointerType* printf_arg_type = m_builder->getInt8Ty()->getPointerTo();
             llvm::FunctionType* printf_type = llvm::FunctionType::get(m_builder->getInt32Ty(), printf_arg_type, true);
             printf_func = llvm::Function::Create(printf_type, llvm::Function::ExternalLinkage, "printf", m_module.get());
         }
@@ -212,9 +212,16 @@ void CodeGen::visit(FunctionCallStatementNode* node) {
     std::cerr << "CodeGen Error: Unknown function called '" << node->functionName.value << "'\n";
 }
 
+// Add this new function to codegen.cpp
 void CodeGen::visit(ReturnStatementNode* node) {
-    node->expression->accept(*this); // Visit the expression to get its value
-    m_builder->CreateRet(m_last_value); // Create the return instruction
+    // 1. Visit the expression to generate its code and get its value
+    node->returnValue->accept(*this);
+    llvm::Value* valueToReturn = m_last_value;
+
+    // 2. Create the LLVM 'ret' instruction
+    if (valueToReturn) {
+        m_builder->CreateRet(valueToReturn);
+    }
 }
 // --- Boilerplate and Debugging ---
 

@@ -6,7 +6,7 @@
 #include <vector>
 #include "token.hpp" // We need the Token struct
 
-struct ReturnStatementNode;1
+
 struct ProgramNode;
 struct FunctionDefinitionNode;
 struct StatementNode;
@@ -17,8 +17,7 @@ struct NumberLiteralNode;
 struct BinaryOpNode;
 struct VariableNode;
 struct ParameterNode;
-
-
+struct ReturnStatementNode;
 // --- Visitor Pattern ---
 // This is a clean way to process AST nodes without cluttering the node classes themselves.
 // We'll use it for our AstPrinter, and later for the Code Generator.
@@ -110,5 +109,6 @@ struct BinaryOpNode : public ExpressionNode {
 
 struct ReturnStatementNode : public StatementNode {
     std::unique_ptr<ExpressionNode> expression;
+    std::unique_ptr<ExpressionNode> returnValue;
     void accept(AstVisitor& visitor) override { visitor.visit(this); }
 };
