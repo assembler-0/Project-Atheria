@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>Atheria</string>
+    <key>scopeName</key>
+    <string>source.athx</string>
+    <key>fileTypes</key>
+    <array>
+        <!-- Add the file extension for your language here -->
+        <string>athx</string>
+    </array>
+    <key>patterns</key>
+    <array>
+        <!-- Include rules for different parts of the language -->
+        <dict>
+            <key>include</key>
+            <string>#comments</string>
+        </dict>
+        <dict>
+            <key>include</key>
+            <string>#keywords</string>
+        </dict>
+        <dict>
+            <key>include</key>
+            <string>#types</string>
+        </dict>
+        <dict>
+            <key>include</key>
+            <string>#strings</string>
+        </dict>
+        <dict>
+            <key>include</key>
+            <string>#numbers</string>
+        </dict>
+    </array>
+    <key>repository</key>
+    <dict>
+        <!-- Rule for single-line comments -->
+        <key>comments</key>
+        <dict>
+            <key>name</key>
+            <string>comment.line.double-slash.athx</string>
+            <key>match</key>
+            <string>//.*</string>
+        </dict>
+
+        <!-- Rule for keywords -->
+        <key>keywords</key>
+        <dict>
+            <key>name</key>
+            <string>keyword.control.athx</string>
+            <!-- \b is a word boundary to prevent matching 'myreturn' -->
+            <key>match</key>
+            <string>\b(return|let|if|else)\b</string>
+        </dict>
+        
+        <!-- Rule for built-in types -->
+        <key>types</key>
+        <dict>
+            <key>name</key>
+            <string>storage.type.athx</string>
+            <key>match</key>
+            <string>\b(int32_t|float|bool)\b</string>
+        </dict>
+
+        <!-- Rule for strings -->
+        <key>strings</key>
+        <dict>
+            <key>name</key>
+            <string>string.quoted.double.athx</string>
+            <key>begin</key>
+            <string>"</string>
+            <key>end</key>
+            <string>"</string>
+            <key>patterns</key>
+            <array>
+                <dict>
+                    <key>name</key>
+                    <string>constant.character.escape.athx</string>
+                    <key>match</key>
+                    <string>\\.</string>
+                </dict>
+            </array>
+        </dict>
+
+        <!-- Rule for numbers -->
+        <key>numbers</key>
+        <dict>
+            <key>name</key>
+            <string>constant.numeric.athx</string>
+            <key>match</key>
+            <string>\b[0-9]+\b</string>
+        </dict>
+    </dict>
+</dict>
+</plist>

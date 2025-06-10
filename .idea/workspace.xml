@@ -6,9 +6,12 @@
   <component name="BackendCodeEditorMiscSettings">
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -30,15 +33,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ccf4eba-cd5b-4635-92b7-4cbfc46eae9d" name="Changes" comment="fixing in progress">
+    <list default="true" id="5ccf4eba-cd5b-4635-92b7-4cbfc46eae9d" name="Changes" comment="added function declaration (yet cannot be called locally) and returns">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegen.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.athx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.athx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser.cpp.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser.hpp.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,49 +45,53 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "assembler-0"
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;assembler-0&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/assembler-0/Project-Atheria.git",
-    "accountId": "d492ec92-f0fb-465a-9bb5-c47bd7a06bd3"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/assembler-0/Project-Atheria.git&quot;,
+    &quot;accountId&quot;: &quot;d492ec92-f0fb-465a-9bb5-c47bd7a06bd3&quot;
   }
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2yJljHytqcOw2ceWle0G248CqiH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CMake Application.ac.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.ac.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.textmate.bundles&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="CMake Application.ac">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="AArch64TargetParserTableGen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AtheriaCompiler" TARGET_NAME="AArch64TargetParserTableGen" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -133,13 +133,13 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.ac" />
       <item itemvalue="CMake Application.AArch64TargetParserTableGen" />
-      <item itemvalue="CMake Application.acc_gen" />
       <item itemvalue="CMake Application.ARMTargetParserTableGen" />
+      <item itemvalue="CMake Application.RISCVTargetParserTableGen" />
+      <item itemvalue="CMake Application.ac" />
+      <item itemvalue="CMake Application.acc_gen" />
       <item itemvalue="CMake Application.intrinsics_gen" />
       <item itemvalue="CMake Application.omp_gen" />
-      <item itemvalue="CMake Application.RISCVTargetParserTableGen" />
       <item itemvalue="CMake Application.vt_gen" />
     </list>
   </component>
@@ -150,7 +150,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1749534781828</updated>
-      <workItem from="1749534783905" duration="15179000" />
+      <workItem from="1749534783905" duration="15984000" />
+      <workItem from="1749560693860" duration="243000" />
+      <workItem from="1749560946400" duration="4000" />
     </task>
     <task id="LOCAL-00001" summary="COMPILER DONE">
       <option name="closed" value="true" />
@@ -184,7 +186,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749558329632</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added function declaration (yet cannot be called locally) and returns">
+      <option name="closed" value="true" />
+      <created>1749560156262</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1749560156262</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +208,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="COMPILER DONE" />
     <MESSAGE value="fixing in progress" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing in progress" />
+    <MESSAGE value="added function declaration (yet cannot be called locally) and returns" />
+    <option name="LAST_COMMIT_MESSAGE" value="added function declaration (yet cannot be called locally) and returns" />
   </component>
 </project>
