@@ -30,7 +30,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ccf4eba-cd5b-4635-92b7-4cbfc46eae9d" name="Changes" comment="">
+    <list default="true" id="5ccf4eba-cd5b-4635-92b7-4cbfc46eae9d" name="Changes" comment="COMPILER DONE">
       <change afterPath="$PROJECT_DIR$/.idea/Project-Atheria.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
@@ -159,8 +159,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1749534781828</updated>
-      <workItem from="1749534783905" duration="2284000" />
+      <workItem from="1749534783905" duration="3043000" />
     </task>
+    <task id="LOCAL-00001" summary="COMPILER DONE">
+      <option name="closed" value="true" />
+      <created>1749537221223</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1749537221223</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,5 +179,9 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="COMPILER DONE" />
+    <option name="LAST_COMMIT_MESSAGE" value="COMPILER DONE" />
   </component>
 </project>

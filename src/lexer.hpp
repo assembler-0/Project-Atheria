@@ -1,45 +1,25 @@
-#ifndef YL_LEXER_HPP
-#define YL_LEXER_HPP
-
-#include <string>
-#include <vector>
-#include <cctype>
-#include <unordered_map>
-
-enum class TokenType {
-    Identifier,
-    Number,
-    String,
-    Keyword,
-    Symbol,
-    Eof,
-    Unknown
-};
-
-struct Token {
-    TokenType type;
-    std::string value;
-    int line;
-    int col;
-};
+#pragma once
+#include "token.hpp"
 
 class Lexer {
 public:
-    Lexer(const std::string& src);
-    Token next();
+    // Constructor takes the source code to be tokenized
+    Lexer(const std::string& source);
+
+    // The main function of the lexer. Returns the next token.
+    Token getNextToken();
 
 private:
-    char peek() const;
-    char advance();
-    void skipWhitespace();
-    Token identifier();
-    Token number();
-    Token string();
+    std::string m_source;
+    size_t m_current_pos = 0;
 
-    const std::string& source;
-    size_t pos = 0;
-    int line = 1;
-    int col = 1;
+    // Helper functions
+    char peek(); // Look at the current character without consuming it
+    char advance(); // Consume the current character and move to the next
+    bool isAtEnd(); // Check if we've consumed all characters
+    void skipWhitespace(); // Skips spaces, tabs, newlines
+
+    // Token-specific helpers
+    Token makeIdentifier();
+    Token makeString();
 };
-
-#endif // YL_LEXER_HPP

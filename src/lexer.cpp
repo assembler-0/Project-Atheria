@@ -1,49 +1,105 @@
 #include "lexer.hpp"
-#include <cctype>
-#include <unordered_set>
+#include <cctype> // for isalpha, isalnum
 
-namespace {
-    std::unordered_set<std::string> keywords = {
-        "if", "else", "while", "return", "func", "let", "true", "false"
-    };
+Lexer::Lexer(const std::string& source) : m_source(source) {}
 
-    bool isSymbolChar(char c) {
-        return std::string("+-*/=(){};,:<>!&|[]").find(c) != std::string::npos;
+// A very important note on your "Rust-like types" comment:
+// The lexer's job is to identify `int32_t` as an IDENTIFIER. That's it.
+// It is the *parser's* job later on to understand that this particular
+// identifier is being used as a type annotation. This design is flexible
+// and correct! It means if you later want `i32` or `MyCoolType`, the
+// lexer doesn't need to change at all.
+
+Token Lexer::getNextToken() {
+    skipWhitespace();
+
+    if (isAtEnd()) {
+        return {TokenType::END_OF_FILE, ""};
+    }
+
+    char c = advance();
+
+    // Handle identifiers and keywords
+    if (isalpha(c) || c == '_') {
+        // We've backtracked one character because advance() consumed it.
+        m_current_pos--; 
+        return makeIdentifier();
+    }
+
+    // Handle string literals
+    if (c == '"') {
+        return makeString();
+    }
+
+    // Handle single-character tokens
+    switch (c) {
+        case '(': return {TokenType::LEFT_PAREN, "("};
+        case ')': return {TokenType::RIGHT_PAREN, ")"};
+        case '{': return {TokenType::LEFT_BRACE, "{"};
+        case '}': return {TokenType::RIGHT_BRACE, "}"};
+        case ';': return {TokenType::SEMICOLON, ";"};
+    }
+
+    return {TokenType::UNKNOWN, std::string(1, c)};
+}
+
+// --- Private Helper Methods ---
+
+bool Lexer::isAtEnd() {
+    return m_current_pos >= m_source.length();
+}
+
+char Lexer::peek() {
+    if (isAtEnd()) return '\0';
+    return m_source[m_current_pos];
+}
+
+char Lexer::advance() {
+    if (!isAtEnd()) m_current_pos++;
+    return m_source[m_current_pos - 1];
+}
+
+void Lexer::skipWhitespace() {
+    while (true) {
+        char c = peek();
+        switch (c) {
+            case ' ':
+            case '\r':
+            case '\t':
+            case '\n':
+                advance();
+                break;
+            default:
+                return;
+        }
     }
 }
 
-Token Lexer::nextToken() {
-    while (pos < source.size() && std::isspace(source[pos])) ++pos;
+Token Lexer::makeIdentifier() {
+    size_t start = m_current_pos;
+    while (isalnum(peek()) || peek() == '_') {
+        advance();
+    }
+    std::string text = m_source.substr(start, m_current_pos - start);
+    return {TokenType::IDENTIFIER, text};
+}
 
-    if (pos >= source.size()) return { TokenType::EndOfFile, "", pos };
-
-    size_t start = pos;
-
-    if (std::isalpha(source[pos]) || source[pos] == '_') {
-        while (pos < source.size() && (std::isalnum(source[pos]) || source[pos] == '_')) ++pos;
-        std::string word = source.substr(start, pos - start);
-        if (keywords.count(word)) return { TokenType::Keyword, word, start };
-        return { TokenType::Identifier, word, start };
+Token Lexer::makeString() {
+    size_t start = m_current_pos;
+    while (peek() != '"' && !isAtEnd()) {
+        advance();
+    }
+    
+    // We don't handle unterminated strings for now, but in a real
+    // compiler, you would want to report an error here.
+    if (isAtEnd()) {
+        return {TokenType::UNKNOWN, "Unterminated string."};
     }
 
-    if (std::isdigit(source[pos])) {
-        while (pos < source.size() && std::isdigit(source[pos])) ++pos;
-        return { TokenType::Number, source.substr(start, pos - start), start };
-    }
+    // Consume the closing quote.
+    advance();
 
-    if (source[pos] == '"') {
-        ++pos; // skip opening quote
-        while (pos < source.size() && source[pos] != '"') {
-            if (source[pos] == '\') ++pos;
-            ++pos;
-        }
-        ++pos; // skip closing quote
-        return { TokenType::String, source.substr(start + 1, pos - start - 2), start };
-    }
-
-    if (isSymbolChar(source[pos])) {
-        return { TokenType::Symbol, std::string(1, source[pos++]), start };
-    }
-
-    return { TokenType::Invalid, std::string(1, source[pos++]), start };
+    // The value of the string is the part *inside* the quotes.
+    std::string value = m_source.substr(start, m_current_pos - start - 1);
+    return {TokenType::STRING_LITERAL, value};
 }
