@@ -6,7 +6,7 @@ Lexer::Lexer(const std::string& source) : m_source(source) {}
 // Helper function to check for keywords
 static TokenType checkKeyword(const std::string& text) {
     if (text == "return") return TokenType::RETURN;
-    // You'll add more keywords like 'if', 'else', 'let', 'int32_t' here later
+    if (text == "auto") return TokenType::AUTO;
     return TokenType::IDENTIFIER;
 }
 

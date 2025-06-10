@@ -25,6 +25,8 @@ private:
     void visit(BinaryOpNode* node) override;      // <-- NEW
     void visit(VariableNode* node) override;      // <-- NEW
     void visit(ReturnStatementNode* node) override;
+    void visit(AutoStatementNode* node) override;
+    void visit(FunctionCallExpressionNode* node) override;
 
     // --- Core LLVM Objects ---
     std::unique_ptr<llvm::LLVMContext> m_context;

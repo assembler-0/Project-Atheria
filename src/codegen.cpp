@@ -223,6 +223,65 @@ void CodeGen::visit(ReturnStatementNode* node) {
         m_builder->CreateRet(valueToReturn);
     }
 }
+
+void CodeGen::visit(AutoStatementNode* node) {
+    // 1. Evaluate the initializer expression on the right side of the '='.
+    // After this call, the result will be in m_last_value.
+    node->initializer->accept(*this);
+    llvm::Value* initial_value = m_last_value;
+
+    if (!initial_value) {
+        std::cerr << "CodeGen Error: Invalid initializer for variable '" << node->name.value << "'.\n";
+        return;
+    }
+
+    // 2. Get the type of the variable from the initializer's value.
+    // This is "type inference" - the magic of 'auto'!
+    llvm::Type* var_type = initial_value->getType();
+
+    // 3. Allocate memory on the stack for the new variable.
+    // CreateAlloca reserves space in the current function's stack frame.
+    llvm::Value* alloca = m_builder->CreateAlloca(var_type, nullptr, node->name.value);
+
+    // 4. Store the initial value into the allocated memory.
+    m_builder->CreateStore(initial_value, alloca);
+
+    // 5. Add the new variable to our symbol table so we can find it later.
+    // We store the variable's name and a pointer to its memory location (the alloca).
+    m_symbol_table[node->name.value] = alloca;
+}
+// Add this new function to the end of src/codegen.cpp
+void CodeGen::visit(FunctionCallExpressionNode* node) {
+    // 1. Look up the function in the module's symbol table.
+    llvm::Function* calleeFunc = m_module->getFunction(node->functionName.value);
+    if (!calleeFunc) {
+        std::cerr << "CodeGen Error: Unknown function referenced: " << node->functionName.value << "\n";
+        m_last_value = nullptr;
+        return;
+    }
+
+    // 2. Check that the number of arguments matches what the function expects.
+    if (calleeFunc->arg_size() != node->arguments.size()) {
+        std::cerr << "CodeGen Error: Incorrect # of arguments passed to " << node->functionName.value << "\n";
+        m_last_value = nullptr;
+        return;
+    }
+
+    // 3. Generate the code for each argument expression.
+    std::vector<llvm::Value*> ArgsV;
+    for (const auto& arg : node->arguments) {
+        arg->accept(*this); // Visit the argument expression
+        if (!m_last_value) {
+            // An error occurred parsing one of the arguments
+            return;
+        }
+        ArgsV.push_back(m_last_value);
+    }
+
+    // 4. Create the function call instruction.
+    // The result of the call is itself an llvm::Value*, which we store.
+    m_last_value = m_builder->CreateCall(calleeFunc, ArgsV, "calltmp");
+}
 // --- Boilerplate and Debugging ---
 
 void CodeGen::dump() {

@@ -25,7 +25,9 @@ private:
     std::unique_ptr<FunctionDefinitionNode> parseFunctionDefinition();
     std::unique_ptr<StatementNode> parseStatement();
     std::unique_ptr<StatementNode> parseReturnStatement();
+    std::unique_ptr<StatementNode> parseAutoStatement();
     std::unique_ptr<FunctionCallStatementNode> parseFunctionCallStatement();
+    std::unique_ptr<ExpressionNode> parseFunctionCallExpression();
 
     // --- Expression Parsing Hierarchy ---
     std::unique_ptr<ExpressionNode> parseExpression(); // Entry Point

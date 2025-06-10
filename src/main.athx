@@ -1,7 +1,6 @@
-int32_t add(int32_t a, int32_t b) {
-    return a * b;
-}
-int32_t main(){
-    print("Atheria");
-    return 0;
+int32_t main() {
+    auto x = 40;
+    auto y = 2;
+    auto z = x * y;
+    return z;
 }

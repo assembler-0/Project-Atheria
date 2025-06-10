@@ -23,6 +23,7 @@ enum class TokenType {
 
     // Keywords
     RETURN,     // The 'return' keyword
+    AUTO,
 
     // Special
     END_OF_FILE,

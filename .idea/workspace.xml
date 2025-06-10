@@ -33,8 +33,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ccf4eba-cd5b-4635-92b7-4cbfc46eae9d" name="Changes" comment="added function declaration (yet cannot be called locally) and returns">
+    <list default="true" id="5ccf4eba-cd5b-4635-92b7-4cbfc46eae9d" name="Changes" comment="add simple syntax for clion">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast_printer.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast_printer.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codegen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegen.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codegen.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegen.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.athx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.athx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/token.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/token.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/token.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +103,11 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.ac">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AArch64TargetParserTableGen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AtheriaCompiler" TARGET_NAME="AArch64TargetParserTableGen" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -152,7 +168,7 @@
       <updated>1749534781828</updated>
       <workItem from="1749534783905" duration="15984000" />
       <workItem from="1749560693860" duration="243000" />
-      <workItem from="1749560946400" duration="4000" />
+      <workItem from="1749560946400" duration="4008000" />
     </task>
     <task id="LOCAL-00001" summary="COMPILER DONE">
       <option name="closed" value="true" />
@@ -194,7 +210,23 @@
       <option name="project" value="LOCAL" />
       <updated>1749560156262</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add simple syntax for clion">
+      <option name="closed" value="true" />
+      <created>1749560997028</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1749560997028</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add simple syntax for clion">
+      <option name="closed" value="true" />
+      <created>1749561002403</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1749561002403</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +241,7 @@
     <MESSAGE value="COMPILER DONE" />
     <MESSAGE value="fixing in progress" />
     <MESSAGE value="added function declaration (yet cannot be called locally) and returns" />
-    <option name="LAST_COMMIT_MESSAGE" value="added function declaration (yet cannot be called locally) and returns" />
+    <MESSAGE value="add simple syntax for clion" />
+    <option name="LAST_COMMIT_MESSAGE" value="add simple syntax for clion" />
   </component>
 </project>

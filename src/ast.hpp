@@ -18,6 +18,8 @@ struct BinaryOpNode;
 struct VariableNode;
 struct ParameterNode;
 struct ReturnStatementNode;
+struct AutoStatementNode;
+struct FunctionCallExpressionNode;
 // --- Visitor Pattern ---
 // This is a clean way to process AST nodes without cluttering the node classes themselves.
 // We'll use it for our AstPrinter, and later for the Code Generator.
@@ -30,7 +32,8 @@ struct AstVisitor {
     virtual void visit(BinaryOpNode* node) = 0;
     virtual void visit(VariableNode* node) = 0;
     virtual void visit(ReturnStatementNode* node) = 0;
-
+    virtual void visit(AutoStatementNode* node) = 0;
+    virtual void visit(FunctionCallExpressionNode* node) = 0;
 };
 
 
@@ -110,5 +113,17 @@ struct BinaryOpNode : public ExpressionNode {
 struct ReturnStatementNode : public StatementNode {
     std::unique_ptr<ExpressionNode> expression;
     std::unique_ptr<ExpressionNode> returnValue;
+    void accept(AstVisitor& visitor) override { visitor.visit(this); }
+};
+
+struct AutoStatementNode : public StatementNode{
+    Token name;
+    std::unique_ptr<ExpressionNode> initializer;
+    void accept(AstVisitor& visitor) override { visitor.visit(this); }
+};
+
+struct FunctionCallExpressionNode : public ExpressionNode{
+    Token functionName;
+    std::vector<std::unique_ptr<ExpressionNode>> arguments;
     void accept(AstVisitor& visitor) override { visitor.visit(this); }
 };

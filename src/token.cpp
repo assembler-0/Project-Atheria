@@ -19,6 +19,7 @@ std::string tokenTypeToString(TokenType type) {
         case TokenType::NUMBER_LITERAL:    return "NUMBER_LITERAL";
         case TokenType::RETURN:    return "RETURN";
         case TokenType::COMMA:    return "COMMA";
+        case TokenType::AUTO:    return "AUTO";
         default:                        return "UNKNOWN";
     }
 }
