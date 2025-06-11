@@ -53,7 +53,7 @@
             <string>keyword.control.athx</string>
             <!-- \b is a word boundary to prevent matching 'myreturn' -->
             <key>match</key>
-            <string>\b(return|let|if|else)\b</string>
+            <string>\b(return|auto|if|else)\b</string>
         </dict>
         
         <!-- Rule for built-in types -->
